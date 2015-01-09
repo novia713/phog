@@ -3,7 +3,18 @@
     "description":"Tool for printing PHP variables in navigator javascript console.",
     "autoload": {
         "psr-0" : {
-        "Novia713\\Phog" : "src"
+        	"Novia713\\Phog" : "src/"
         }
-    }
+    },
+    "license": [
+       "GPL-3.0+"
+    ],
+    "authors": [
+        {
+            "name": "Leandro Vázquez Cervantes",
+            "email": "leandro@leandro.org",
+            "homepage": "https://github.com/novia713/phog",
+            "role": "Developer"
+        }
+    ]
 }
