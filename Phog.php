@@ -88,7 +88,7 @@ class Phog
 
 
 
-
+/*
 $languages = [
      ["name"=> "JavaScript", "fileExtension"=> ".js"] ,
      ["name"=> "TypeScript", "fileExtension"=> ".ts"] ,
@@ -101,3 +101,4 @@ $phog->info("lorem ipsum");
 $phog->table($languages);
 $phog->warn([1,"anda",3,4,5]);
 
+*/
