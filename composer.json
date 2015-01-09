@@ -1,0 +1,8 @@
+{
+    "name": "novia713/phog",
+    "autoload": {
+        "psr-0" : {
+        "Novia713\\Phog" : "src"
+        }
+    }
+}
