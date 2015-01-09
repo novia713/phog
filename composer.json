@@ -3,7 +3,7 @@
     "description":"Tool for printing PHP variables in navigator javascript console.",
     "autoload": {
         "psr-4" : {
-        	"Novia713\\Phog\\" : "src/Novia713/Phog"
+        	"Novia713\\Phog\\" : "src/"
         }
     },
     "license": [
