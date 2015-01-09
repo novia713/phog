@@ -29,47 +29,35 @@ class Phog
     };
   }
 
-  public
-
-  function log($txt)
+  public function log($txt)
   {
     $this->printjson($txt, "log");
   }
 
-  public
-
-  function info($txt)
+  public function info($txt)
   {
     $this->printjson($txt, "info");
   }
 
-  public
-
-  function warn($txt)
+  public function warn($txt)
   {
     $this->printjson($txt, "warn");
   }
 
-  public
-
-  function table($txt)
+  public function table($txt)
   {
     $this->printobj($txt, "table");
   }
 
   // log, info & warn → quoted text
-
-  private
-  function printjson($txt, $mode)
+  private function printjson($txt, $mode)
   {
     $txt = json_encode(json_encode($txt));
     $this->_print->__invoke($txt, $mode);
   }
 
   // table → unquoted object
-
-  private
-  function printobj($txt, $mode)
+  private function printobj($txt, $mode)
   {
     $txt = json_encode($txt);
     $this->_print->__invoke($txt, $mode);
