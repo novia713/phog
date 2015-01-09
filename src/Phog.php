@@ -1,4 +1,5 @@
 <?php
+namespace Novia713\Phog;
 /*
 * This file is part of Phog.
 *
