@@ -1,5 +1,6 @@
 {
     "name": "novia713/phog",
+    "description":"Tool for printing PHP variables in navigator javascript console.",
     "autoload": {
         "psr-0" : {
         "Novia713\\Phog" : "src"
