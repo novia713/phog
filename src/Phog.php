@@ -24,25 +24,30 @@ class Phog
   var $_print;
   function __construct()
   {
-    $this->_print = function ($msg, $mode)
+    $this->_print = function ($msg, $mode, $css=null)
     {
+      if ($css){
+        $str_css="";
+        foreach ($css as $k => $v) { $str_css .= "$k:$v;"; }
+        $msg ='"%c' . str_replace('"', "", $msg) . '", "'.$str_css.'"';
+      }
       echo "<script>console." . $mode . "(" . $msg . ");</script>";
     };
   }
 
-  public function log($txt)
+  public function log($txt, $css=null)
   {
-    $this->printjson($txt, "log");
+    $this->printjson($txt, "log", $css);
   }
 
-  public function info($txt)
+  public function info($txt, $css=null)
   {
-    $this->printjson($txt, "info");
+    $this->printjson($txt, "info", $css);
   }
 
-  public function warn($txt)
+  public function warn($txt, $css=null)
   {
-    $this->printjson($txt, "warn");
+    $this->printjson($txt, "warn", $css);
   }
 
   public function table($txt)
@@ -50,17 +55,17 @@ class Phog
     $this->printobj($txt, "table");
   }
 
-  // log, info & warn → quoted text
-  private function printjson($txt, $mode)
-  {
-    $txt = json_encode(json_encode($txt));
-    $this->_print->__invoke($txt, $mode);
-  }
-
-  // table → unquoted object
-  private function printobj($txt, $mode)
+  // log, info & warn
+  private function printjson($txt, $mode, $css=null)
   {
     $txt = json_encode($txt);
+    $this->_print->__invoke($txt, $mode, $css);
+  }
+
+  // table → unquoted object, without CSS
+  private function printobj($txt, $mode)
+  {
+    $txt =  json_encode($txt);
     $this->_print->__invoke($txt, $mode);
   }
 }
