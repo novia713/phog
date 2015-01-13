@@ -1,13 +1,13 @@
 <?php
 namespace Novia713\Phog;
 /*
-* This file is part of Phog.
-*
-* (c) 2015 Leandro Vázquez
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of Phog.
+ *
+ * (c) 2015 Leandro Vázquez
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 
 
@@ -21,8 +21,8 @@ error_reporting(E_ALL);
 class Phog
 
 {
-  var $_print;
-  function __construct()
+  private $_print;
+  public function __construct()
   {
     $this->_print = function ($msg, $mode, $css=null)
     {
