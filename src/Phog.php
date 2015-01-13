@@ -26,9 +26,10 @@ class Phog
   {
     $this->_print = function ($msg, $mode, $css=null)
     {
-      if ($css){
+      if ($css)
+      {
         $str_css="";
-        foreach ($css as $k => $v) { $str_css .= "$k:$v;"; }
+        array_walk($css, function($v, $k) use $str_css{ $str_css .= "$k:$v;"; });
         $msg ='"%c' . str_replace('"', "", $msg) . '", "'.$str_css.'"';
       }
       echo "<script>console." . $mode . "(" . $msg . ");</script>";
