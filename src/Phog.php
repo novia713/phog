@@ -50,6 +50,16 @@ class Phog
     $this->printjson($txt, "warn", $css);
   }
 
+  public function debug($txt, $css=null)
+  {
+    $this->printjson($txt, "debug", $css);
+  }
+
+  public function error($txt, $css=null)
+  {
+    $this->printjson($txt, "error", $css);
+  }
+
   public function table($txt)
   {
     $this->printobj($txt, "table");
