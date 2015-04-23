@@ -1,5 +1,7 @@
 <?php
+
 namespace Novia713\Phog;
+
 /*
  * This file is part of Phog.
  *
@@ -9,107 +11,71 @@ namespace Novia713\Phog;
  * file that was distributed with this source code.
  */
 
-
-
-/**
+/*
  * Tool for printing PHP variables
  * in navigator javascript console.
  *
  * @author leandro <leandro@leandro.org>
  */
+
 error_reporting(E_ALL);
 class Phog
-
 {
-  private $_print;
   private $_build_print;
 
-  private $txt;
-  private $css;
-
-  public function __construct()
-  {
-    $this->_setup_vars = function ($txt, $css)
+    public function __construct()
     {
-      $this->txt = ($txt)? $txt : null;
-      $this->css = ($css)? $css : null;
-    };
+      $this->_build_print = function ($txt, $mode, $css = null) {
+          $txt = json_encode($txt);
+          if ($css) {
+              $str_css = '';
+              array_walk($css,
+                function ($v, $k) use (&$str_css) {
+                    $str_css .= "$k:$v;";
+                });
+              $txt = '"%c'.str_replace('"', '', $txt).'", "'.$str_css.'"';
+          }
+          echo "\n<script>console.".$mode.'('.$txt.");</script>\n";
+      };
+    }
 
-    $this->_print = function ($msg, $mode, $css=null)
+    public function log($txt, $css = null)
     {
-      if ($css)
-      {
-        $str_css="";
-        array_walk($css,
-            function($v, $k) use (&$str_css) {
-                $str_css .= "$k:$v;";
-            });
-        $msg ='"%c' . str_replace('"', "", $msg) . '", "'.$str_css.'"';
-      }
-      echo "<script>console." . $mode . "(" . $msg . ");</script>";
-    };
+        $this->_build_print->__invoke($txt, 'log', $css);
+    }
 
-    $this->_build_print = function ($mode)
+    public function info($txt, $css = null)
     {
-      $this->printjson($this->txt, $mode, $this->css);
-    };
-  }
+        $this->_build_print->__invoke($txt, 'info', $css);
+    }
 
-  public function log($txt, $css=null)
-  {
-    $this->_setup_vars->__invoke($txt, $css);
-    $this->_build_print->__invoke("log");
-  }
+    public function warn($txt, $css = null)
+    {
+        $this->_build_print->__invoke($txt, 'warn', $css);
+    }
 
-  public function info($txt, $css=null)
-  {
-    $this->_setup_vars->__invoke($txt, $css);
-    $this->_build_print->__invoke("info");
-  }
+    public function debug($txt, $css = null)
+    {
+        $this->_build_print->__invoke($txt, 'debug', $css);
+    }
 
-  public function warn($txt, $css=null)
-  {
-    $this->_setup_vars->__invoke($txt, $css);
-    $this->_build_print->__invoke("warn");
-  }
+    public function error($txt, $css = null)
+    {
+        $this->_build_print->__invoke($txt, 'error', $css);
+    }
 
-  public function debug($txt, $css=null)
-  {
-    $this->_setup_vars->__invoke($txt, $css);
-    $this->_build_print->__invoke("debug");
-  }
-
-  public function error($txt, $css=null)
-  {
-    $this->_setup_vars->__invoke($txt, $css);
-    $this->_build_print->__invoke("error");
-  }
-
-  public function table($txt)
-  {
-    $this->printobj($txt, "table");
-  }
-
-  // log, info & warn
-  private function printjson($txt, $mode, $css)
-  {
-    $txt = json_encode($txt);
-    $this->_print->__invoke($txt, $mode, $css);
-  }
-
-  // table → unquoted object, without CSS
-  private function printobj($txt, $mode)
-  {
-    $txt =  json_encode($txt);
-    $this->_print->__invoke($txt, $mode);
-  }
+    public function table($txt)
+    {
+        $this->_build_print->__invoke($txt, 'table');
+    }
 }
 
 /*
 $phog = new \Novia713\Phog\Phog();
-$phog->log("hola amigos log", ["color"=>"yellow","background-color"=>"purple"]);
-$phog->info("info", ["color"=>"yellow","background-color"=>"navy"]);
-$phog->warn("warn", ["color"=>"yellow","background-color"=>"purple"]);
-$phog->debug("debug", ["color"=>"yellow","background-color"=>"navy"]);
-$phog->error("error", ["color"=>"yellow","background-color"=>"purple"]);
+$phog->log('hola amigos log', ['color' => 'yellow', 'background-color' => 'purple']);
+$phog->info('info', ['color' => 'yellow', 'background-color' => 'navy']);
+$phog->warn('warn', ['color' => 'yellow', 'background-color' => 'purple']);
+$phog->debug('debug', ['color' => 'yellow', 'background-color' => 'navy']);
+$phog->error('error', ['color' => 'yellow', 'background-color' => 'purple']);
+$phog->table([1 => 'abc', 2 => 'abcd', 3 => 'abcf', 4 => 'abcss', 5, 6, 7, 8, 9]);
 */
